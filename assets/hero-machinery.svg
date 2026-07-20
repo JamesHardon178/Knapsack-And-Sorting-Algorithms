@@ -1,0 +1,40 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="矿山设备场景插画">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef4f6"/>
+      <stop offset="70%" stop-color="#d7e2e0"/>
+      <stop offset="100%" stop-color="#c9d2cf"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a9b6b1"/>
+      <stop offset="100%" stop-color="#7d8984"/>
+    </linearGradient>
+    <linearGradient id="machine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f6f5b"/>
+      <stop offset="100%" stop-color="#163b34"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <path d="M0 760 C200 680, 360 692, 520 734 C740 792, 930 798, 1130 730 C1290 675, 1440 660, 1600 710 L1600 1000 L0 1000 Z" fill="url(#hill)" opacity="0.95"/>
+  <path d="M0 842 L1600 842" stroke="#6a726e" stroke-width="18" opacity="0.22"/>
+  <g transform="translate(190,225)">
+    <circle cx="160" cy="430" r="90" fill="#1f2937"/>
+    <circle cx="160" cy="430" r="45" fill="#cbd5e1"/>
+    <circle cx="560" cy="430" r="90" fill="#1f2937"/>
+    <circle cx="560" cy="430" r="45" fill="#cbd5e1"/>
+    <rect x="120" y="320" width="430" height="110" rx="34" fill="url(#machine)"/>
+    <rect x="302" y="178" width="168" height="150" rx="24" fill="#eef2f7"/>
+    <rect x="332" y="204" width="96" height="72" rx="14" fill="#8ea0b2"/>
+    <path d="M490 270 L670 188 L686 216 L514 302 Z" fill="#d97706"/>
+    <path d="M670 188 L780 132 L798 160 L686 216 Z" fill="#f59e0b"/>
+    <path d="M514 302 L696 382 L684 406 L498 326 Z" fill="#b45309"/>
+    <path d="M777 135 L828 202 L803 212 L760 154 Z" fill="#92400e"/>
+    <path d="M108 340 L590 340" stroke="#475569" stroke-width="26" opacity="0.9"/>
+    <rect x="86" y="370" width="510" height="28" rx="14" fill="#334155" opacity="0.85"/>
+  </g>
+  <g opacity="0.35">
+    <circle cx="1280" cy="210" r="88" fill="#fff6db"/>
+    <circle cx="1190" cy="250" r="46" fill="#ffffff"/>
+    <circle cx="1332" cy="272" r="56" fill="#fffaf0"/>
+  </g>
+</svg>

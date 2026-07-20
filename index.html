@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="二手矿山设备展示平台，支持朋友圈分享，查看设备实拍图、报价和联系方式。" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>磐石机械 | 二手矿山设备展示</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #dbe3ea;
+      --brand: #1f6f5b;
+      --accent: #d97706;
+      --shadow: 0 18px 36px rgba(15, 23, 42, 0.10);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 16px 16px 110px; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 16px; margin: -16px -16px 16px;
+      background: rgba(244, 246, 248, 0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(219, 227, 234, 0.85);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .logo {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: grid; place-items: center; color: #fff; font-weight: 800;
+      background: linear-gradient(145deg, #1f6f5b, #0f172a);
+      box-shadow: var(--shadow);
+    }
+    .brand h1 { margin: 0; font-size: 16px; line-height: 1.1; }
+    .brand p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid transparent;
+      font-weight: 700; font-size: 14px; cursor: pointer;
+    }
+    .btn.primary { background: var(--brand); color: #fff; }
+    .btn.secondary { background: #fff; border-color: var(--line); color: var(--text); }
+
+    .hero {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px;
+      margin-top: 8px;
+    }
+    .panel {
+      background: var(--panel); border: 1px solid rgba(219, 227, 234, 0.9);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .hero-copy { padding: 22px; min-height: 310px; display: flex; flex-direction: column; justify-content: space-between; }
+    .eyebrow {
+      width: fit-content; padding: 7px 10px; border-radius: 999px;
+      background: #e7f3ef; color: var(--brand); font-size: 13px; font-weight: 700;
+    }
+    .hero h2 { margin: 14px 0 10px; font-size: clamp(28px, 4vw, 52px); line-height: 1.05; }
+    .hero p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+    .stat { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #f8fafc; }
+    .stat strong { display: block; font-size: 18px; margin-bottom: 4px; }
+    .stat span { color: var(--muted); font-size: 12px; }
+
+    .hero-visual {
+      position: relative; overflow: hidden; min-height: 310px;
+      background:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.04), rgba(15, 23, 42, 0)),
+        url("assets/hero-machinery.svg") center/cover no-repeat,
+        linear-gradient(135deg, #dde7e4, #f5efe5);
+    }
+    .visual-badge {
+      position: absolute; left: 16px; top: 16px;
+      padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.95); font-size: 12px; font-weight: 700;
+    }
+    .visual-card {
+      position: absolute; left: 16px; right: 16px; bottom: 16px;
+      padding: 14px; border-radius: 12px; color: #fff;
+      background: rgba(15, 23, 42, 0.82);
+    }
+    .visual-row { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .visual-card small { color: rgba(255,255,255,0.72); }
+    .taglist { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .tag {
+      padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.1);
+      color: #fff; font-size: 12px;
+    }
+
+    .section { margin-top: 16px; padding: 18px; }
+    .section-head { display: flex; justify-content: space-between; gap: 10px; align-items: end; margin-bottom: 14px; }
+    .section-head h3 { margin: 0; font-size: 20px; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .machine-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .machine-card {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .machine-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: #eef2f7;
+    }
+    .card-body {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .title-row { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+    .card-body h4 { margin: 0; font-size: 16px; line-height: 1.35; }
+    .price { color: var(--accent); font-weight: 800; white-space: nowrap; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .meta span {
+      padding: 5px 8px; border-radius: 999px; background: #f8fafc;
+      border: 1px solid var(--line); color: #334155; font-size: 12px;
+    }
+    .desc { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .card-body .btn { width: 100%; border-radius: 12px; }
+
+    .contact-strip {
+      position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 30;
+      padding: 12px; display: flex; justify-content: space-between; gap: 10px; align-items: center;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+      border: 1px solid rgba(219, 227, 234, 0.9); border-radius: 14px; box-shadow: var(--shadow);
+    }
+    .contact-strip strong { display: block; font-size: 14px; }
+    .contact-strip span { color: var(--muted); font-size: 12px; }
+    .contact-strip .actions { flex-wrap: nowrap; }
+
+    .modal {
+      position: fixed; inset: 0; z-index: 50; display: none;
+      align-items: center; justify-content: center; padding: 20px;
+      background: rgba(15, 23, 42, 0.46);
+    }
+    .modal.open { display: flex; }
+    .modal-panel {
+      width: min(620px, 100%);
+      background: #fff; border-radius: 18px; overflow: hidden;
+      border: 1px solid rgba(219, 227, 234, 0.95); box-shadow: 0 24px 60px rgba(15,23,42,0.24);
+    }
+    .modal-head {
+      display: flex; justify-content: space-between; gap: 12px; align-items: center;
+      padding: 14px 16px; border-bottom: 1px solid var(--line);
+    }
+    .modal-head h4 { margin: 0; font-size: 16px; }
+    .icon-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      border: 1px solid var(--line); background: #fff; cursor: pointer; font-size: 18px;
+    }
+    .modal-body { padding: 16px; display: grid; gap: 14px; }
+
+    .carousel { display: grid; gap: 10px; }
+    .carousel-main {
+      position: relative; overflow: hidden; aspect-ratio: 4 / 3;
+      border-radius: 14px; border: 1px solid var(--line); background: #e8edf3;
+    }
+    .carousel-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 38px; height: 38px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.85); background: rgba(15,23,42,0.55);
+      color: #fff; display: grid; place-items: center; font-size: 18px; cursor: pointer;
+    }
+    .carousel-nav.prev { left: 10px; }
+    .carousel-nav.next { right: 10px; }
+    .carousel-count {
+      position: absolute; left: 10px; bottom: 10px;
+      padding: 6px 10px; border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7); color: #fff; font-size: 12px; font-weight: 700;
+    }
+    .carousel-thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .carousel-thumbs button {
+      width: 68px; aspect-ratio: 4 / 3; padding: 0; overflow: hidden;
+      border-radius: 10px; border: 2px solid transparent; background: #fff; cursor: pointer;
+    }
+    .carousel-thumbs button.active { border-color: var(--brand); }
+    .carousel-thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .detail {
+      padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: #f8fafc;
+    }
+    .detail b { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .detail span { font-size: 14px; }
+    .modal-foot { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    @media (max-width: 980px) {
+      .hero, .machine-grid { grid-template-columns: 1fr; }
+      .section-head, .contact-strip { flex-direction: column; align-items: stretch; }
+      .hero-copy, .hero-visual { min-height: auto; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .wrap { padding: 12px 12px 116px; }
+      .topbar { margin: -12px -12px 14px; padding: 10px 12px; }
+      .stats { grid-template-columns: 1fr; }
+      .section { padding: 14px; }
+      .contact-strip .actions { width: 100%; }
+      .contact-strip .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">磐</div>
+        <div>
+          <h1>磐石机械</h1>
+          <p>二手矿山设备展示平台</p>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn secondary" href="tel:13518712946">拨打电话</a>
+        <button class="btn primary" type="button" data-copy-contact>复制联系方式</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="panel hero-copy">
+          <div>
+            <div class="eyebrow">朋友圈转发页</div>
+            <h2>设备先看实拍，再决定要不要联系。</h2>
+            <p>目前只保留三台真实设备，打开就能看图片、报价和联系方式，适合直接发朋友圈或转给客户。</p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#machines">查看设备</a>
+              <a class="btn secondary" href="#contact">联系我</a>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>3 台</strong><span>当前在售设备</span></div>
+            <div class="stat"><strong>实拍图</strong><span>每台都已接入</span></div>
+            <div class="stat"><strong>13518712946</strong><span>电话 / 微信联系</span></div>
+          </div>
+        </div>
+        <div class="panel hero-visual" aria-label="设备展示图">
+          <div class="visual-badge">本页仅展示现货</div>
+          <div class="visual-card">
+            <div class="visual-row">
+              <div>
+                <strong>矿山设备现货展示</strong><br />
+                <small>点开详情可看轮播图</small>
+              </div>
+              <div style="text-align:right;">
+                <strong style="font-size:20px;">真实图片</strong><br />
+                <small>支持手机浏览</small>
+              </div>
+            </div>
+            <div class="taglist">
+              <span class="tag">压滤机</span>
+              <span class="tag">颚破</span>
+              <span class="tag">现货</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="machines" class="section panel">
+        <div class="section-head">
+          <div>
+            <h3>现货设备</h3>
+            <p>这三台机器都已经接好图片和报价。</p>
+          </div>
+        </div>
+        <div class="machine-grid">
+          <article class="machine-card" data-name="250平压滤机 5万" data-tags="压滤机 现货 热卖" data-status="热卖" data-price="5万" data-images="picture/250平压滤机-5万/250平压滤机-5万.jpg">
+            <img src="picture/250平压滤机-5万/250平压滤机-5万.jpg" alt="250平压滤机 5万" loading="lazy" />
+            <div class="card-body">
+              <div class="title-row">
+                <h4>250平压滤机 5万</h4>
+                <div class="price">¥ 5 万</div>
+              </div>
+              <div class="meta"><span>压滤机</span><span>现货</span></div>
+              <p class="desc">单图展示，适合直接看整机外观和现场状态。</p>
+              <button class="btn primary js-detail" type="button" data-title="250平压滤机 5万" data-images="picture/250平压滤机-5万/250平压滤机-5万.jpg">查看详情</button>
+            </div>
+          </article>
+
+          <article class="machine-card" data-name="250平压滤机 6万" data-tags="压滤机 现货 可试机" data-status="可试机" data-price="6万" data-images="picture/250平压滤机-6万/250平压滤机.2.jpg">
+            <img src="picture/250平压滤机-6万/250平压滤机.2.jpg" alt="250平压滤机 6万" loading="lazy" />
+            <div class="card-body">
+              <div class="title-row">
+                <h4>250平压滤机 6万</h4>
+                <div class="price">¥ 6 万</div>
+              </div>
+              <div class="meta"><span>压滤机</span><span>可试机</span></div>
+              <p class="desc">同类设备，价格和成色分开，方便客户对比。</p>
+              <button class="btn primary js-detail" type="button" data-title="250平压滤机 6万" data-images="picture/250平压滤机-6万/250平压滤机.2.jpg">查看详情</button>
+            </div>
+          </article>
+
+          <article class="machine-card" data-name="大宏立46机 4万2" data-tags="颚破 现货 热卖" data-status="热卖" data-price="4.2万" data-images="picture/大宏立46机-4万2/070f4c3443a64aa7e1d19bad09dfda42.jpg|picture/大宏立46机-4万2/1e3ceb55c32da2158dbda5f42fbb57a9.jpg|picture/大宏立46机-4万2/252477e109986159107612f44c68c5df.jpg|picture/大宏立46机-4万2/37b8319691d912a4ed1a8258b4cf0f69.jpg|picture/大宏立46机-4万2/4c61340baba996117508eb0010018237.jpg|picture/大宏立46机-4万2/7f15f51e6b594a5bd1cc5580f5bda774.jpg">
+            <img src="picture/大宏立46机-4万2/070f4c3443a64aa7e1d19bad09dfda42.jpg" alt="大宏立46机 4万2" loading="lazy" />
+            <div class="card-body">
+              <div class="title-row">
+                <h4>大宏立46机 4万2</h4>
+                <div class="price">¥ 4.2 万</div>
+              </div>
+              <div class="meta"><span>颚破</span><span>6 张实拍</span></div>
+              <p class="desc">点开可连续翻看铭牌、结构和机身状态。</p>
+              <button class="btn primary js-detail" type="button" data-title="大宏立46机 4万2" data-images="picture/大宏立46机-4万2/070f4c3443a64aa7e1d19bad09dfda42.jpg|picture/大宏立46机-4万2/1e3ceb55c32da2158dbda5f42fbb57a9.jpg|picture/大宏立46机-4万2/252477e109986159107612f44c68c5df.jpg|picture/大宏立46机-4万2/37b8319691d912a4ed1a8258b4cf0f69.jpg|picture/大宏立46机-4万2/4c61340baba996117508eb0010018237.jpg|picture/大宏立46机-4万2/7f15f51e6b594a5bd1cc5580f5bda774.jpg">查看详情</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="section panel" style="margin-bottom: 0;">
+        <div class="section-head">
+          <div>
+            <h3>联系方式</h3>
+            <p>手机号和微信都用这个号码：13518712946。</p>
+          </div>
+        </div>
+        <div class="meta">
+          <span>电话：13518712946</span>
+          <span>微信：13518712946</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="contact-strip" id="footer-contact">
+    <div>
+      <strong>13518712946</strong>
+      <span>电话 / 微信联系</span>
+    </div>
+    <div class="actions">
+      <a class="btn secondary" href="tel:13518712946">拨打电话</a>
+      <button class="btn primary" type="button" data-copy-contact>复制联系方式</button>
+    </div>
+  </div>
+
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <div class="modal-head">
+        <h4 id="detailTitle">设备详情</h4>
+        <button class="icon-btn" type="button" id="closeModal" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="carousel">
+          <div class="carousel-main">
+            <button class="carousel-nav prev" type="button" id="carouselPrev" aria-label="上一张">‹</button>
+            <img id="carouselImage" src="assets/hero-machinery.svg" alt="商品轮播图" />
+            <button class="carousel-nav next" type="button" id="carouselNext" aria-label="下一张">›</button>
+            <div class="carousel-count" id="carouselCount">1 / 1</div>
+          </div>
+          <div class="carousel-thumbs" id="carouselThumbs"></div>
+        </div>
+        <p id="detailDesc" style="margin:0;color:var(--muted);line-height:1.7;">点击设备后，这里显示更详细的参数、状态和沟通入口。</p>
+        <div class="detail-grid">
+          <div class="detail"><b>状态</b><span id="detailStatus">现货</span></div>
+          <div class="detail"><b>报价</b><span id="detailPrice">-</span></div>
+          <div class="detail"><b>电话</b><span id="detailPhone">135 1871 2946</span></div>
+          <div class="detail"><b>微信</b><span id="detailWx">13518712946</span></div>
+        </div>
+        <div class="modal-foot">
+          <a class="btn secondary" href="tel:13518712946">拨打电话</a>
+          <button class="btn primary" type="button" data-copy-contact>复制联系方式</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const contactValue = '13518712946';
+    const phoneHref = '13518712946';
+
+    const modal = document.getElementById('detailModal');
+    const closeModal = document.getElementById('closeModal');
+    const detailTitle = document.getElementById('detailTitle');
+    const detailDesc = document.getElementById('detailDesc');
+    const detailStatus = document.getElementById('detailStatus');
+    const detailPrice = document.getElementById('detailPrice');
+    const detailPhone = document.getElementById('detailPhone');
+    const detailWx = document.getElementById('detailWx');
+    const carouselImage = document.getElementById('carouselImage');
+    const carouselCount = document.getElementById('carouselCount');
+    const carouselThumbs = document.getElementById('carouselThumbs');
+    const carouselPrev = document.getElementById('carouselPrev');
+    const carouselNext = document.getElementById('carouselNext');
+
+    let currentImages = ['assets/hero-machinery.svg'];
+    let currentImageIndex = 0;
+
+    const renderCarousel = () => {
+      const images = currentImages.length ? currentImages : ['assets/hero-machinery.svg'];
+      currentImageIndex = (currentImageIndex + images.length) % images.length;
+      carouselImage.src = images[currentImageIndex];
+      carouselImage.alt = `${detailTitle.textContent} 第 ${currentImageIndex + 1} 张图`;
+      carouselCount.textContent = `${currentImageIndex + 1} / ${images.length}`;
+      carouselThumbs.innerHTML = images.map((src, index) => `
+        <button type="button" class="${index === currentImageIndex ? 'active' : ''}" data-index="${index}" aria-label="切换到第 ${index + 1} 张">
+          <img src="${src}" alt="" />
+        </button>
+      `).join('');
+    };
+
+    const setCarousel = (images) => {
+      currentImages = images && images.length ? images : ['assets/hero-machinery.svg'];
+      currentImageIndex = 0;
+      renderCarousel();
+    };
+
+    carouselPrev.addEventListener('click', () => {
+      currentImageIndex -= 1;
+      renderCarousel();
+    });
+
+    carouselNext.addEventListener('click', () => {
+      currentImageIndex += 1;
+      renderCarousel();
+    });
+
+    carouselThumbs.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-index]');
+      if (!button) return;
+      currentImageIndex = Number(button.dataset.index);
+      renderCarousel();
+    });
+
+    document.querySelectorAll('.js-detail').forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.machine-card');
+        const images = (button.dataset.images || card.dataset.images || 'assets/hero-machinery.svg')
+          .split('|')
+          .filter(Boolean);
+
+        detailTitle.textContent = button.dataset.title || '设备详情';
+        detailDesc.textContent = card.querySelector('.desc')?.textContent || '';
+        detailStatus.textContent = card.dataset.status || '现货';
+        detailPrice.textContent = card.dataset.price || '-';
+        detailPhone.textContent = '135 1871 2946';
+        detailWx.textContent = contactValue;
+        setCarousel(images);
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    const hideModal = () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    };
+
+    closeModal.addEventListener('click', hideModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) hideModal();
+    });
+
+    document.querySelectorAll('[data-copy-contact]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(contactValue);
+          const prev = button.textContent;
+          button.textContent = '已复制';
+          setTimeout(() => { button.textContent = prev; }, 1400);
+        } catch (error) {
+          window.prompt('复制联系方式', contactValue);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
